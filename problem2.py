@@ -18,16 +18,43 @@ vocab = open("brown_vocab_100.txt")
 word_index_dict = {}
 for i, line in enumerate(vocab):
     #TODO: import part 1 code to build dictionary
+    line = line.rstrip('\n')
+    word_index_dict[line] = i
 
+sentences = []
 f = open("brown_100.txt")
 
-counts = #TODO: initialize counts to a zero vector
+for line in f:
+    lower = []
+
+    line = line.rstrip("\n")
+    line = line.split(" ")
+    for word in line:
+        lower.append(word.lower())
+    sentences.append(lower[:-1])
+
+
+
+# print(sentences)
+
+#TODO: initialize counts to a zero vector
+counts = np.zeros(813)
 
 #TODO: iterate through file and update counts
+for sentence in sentences:
+    for word in sentence:
+        counts[word_index_dict[word]] += 1
 
-f.close()
+
+print(counts)
+
+
 
 #TODO: normalize and writeout counts. 
+probs = counts / np.sum(counts)
 
+with open('unigram_probs.txt.txt', 'w') as f:
+    for prob in probs:
+        f.write("%s\n"%(str(prob)))
 
 
