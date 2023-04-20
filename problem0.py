@@ -1,8 +1,6 @@
 import nltk
 # nltk.download('brown')
 import matplotlib.pyplot as plt
-import numpy as np
-import re
 
 brown = nltk.corpus.brown
 
