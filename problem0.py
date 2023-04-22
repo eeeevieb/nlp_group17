@@ -1,6 +1,8 @@
 import nltk
 # nltk.download('brown')
 import matplotlib.pyplot as plt
+from collections import Counter
+
 
 brown = nltk.corpus.brown
 
@@ -11,14 +13,18 @@ FD_adv = nltk.FreqDist(word.lower() for word in brown.words(categories='adventur
 FD_scifi = nltk.FreqDist(word.lower() for word in brown.words(categories='science_fiction'))
 
 sorted_words_brown = sorted(set(brown.words()), key=lambda w: -FD_brown[w])
-# print("Ten most frequent words from Brown: "+str(sorted_words_brown[:10]))
+print("Ten most frequent words from Brown: "+str(sorted_words_brown[:10]))
 sorted_words_adv = sorted(set(brown.words(categories='adventure')), key=lambda w: -FD_adv[w])
-# print("Ten most frequent words from Adventure genre: "+str(sorted_words_adv[:10]))
+print("Ten most frequent words from Adventure genre: "+str(sorted_words_adv[:10]))
 sorted_words_scifi = sorted(set(brown.words(categories='science_fiction')), key=lambda w: -FD_scifi[w])
-# print("Ten most frequent words from Science fiction genre: "+str(sorted_words_scifi[:10]))
+print("Ten most frequent words from Science fiction genre: "+str(sorted_words_scifi[:10]))
+
+print("Words in position 500-510 Brown: "+str(sorted_words_brown[500:510]))
+print("Words in position 500-510 Adventure genre: "+str(sorted_words_adv[500:510]))
+print("Words in position 500-510 Science fiction genre: "+str(sorted_words_scifi[500:510]))
 
 tokens = brown.words()
-print("Number of tokens: "+str(len(tokens))) # Is the number of tokens different from the number of words?
+print("Number of tokens: "+str(len(tokens)))
 
 types = set(tokens)
 print("Number of types: "+str(len(types)))
@@ -40,8 +46,12 @@ brown_chars = brown.raw()
 print("Average word length: "+ str(len(brown_chars)/len(tokens)))
 
 # default POS tagger
-freq_POS = nltk.FreqDist(tag[1] for tag in brown.tagged_words())
-print("Ten most frequent POS tags: "+str(freq_POS.most_common(10)))
+freq_POS_brown = nltk.FreqDist(tag[1] for tag in brown.tagged_words())
+print("Ten most frequent POS tags Brown: "+str(freq_POS_brown.most_common(10)))
+freq_POS_adv = nltk.FreqDist(tag[1] for tag in brown.tagged_words(categories="adventure"))
+print("Ten most frequent POS tags Adventure: "+str(freq_POS_adv.most_common(10)))
+freq_POS_scifi = nltk.FreqDist(tag[1] for tag in brown.tagged_words(categories="science_fiction"))
+print("Ten most frequent POS tags Science Fiction: "+str(freq_POS_scifi.most_common(10)))
 
 # Plot the frequency curves for the corpus and two genres
 fig, axs = plt.subplots(1, 2)
@@ -64,5 +74,6 @@ for res in results.keys():
     axs[1].set_ylabel('Log Frequency')
     axs[1].set_title(f"Frequency Curve (Log-log)")
 
+plt.savefig('frequency_curves.png')
 plt.legend()
 plt.show()
