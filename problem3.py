@@ -50,6 +50,8 @@ for sentence in sentences:
         counts[word_index_dict[previous_word], word_index_dict[word]] += 1
         previous_word = word
 
+np.save("bigram_counts", counts)
+
 #TODO: normalize counts
 probs = normalize(counts, norm='l1', axis=1)
 
