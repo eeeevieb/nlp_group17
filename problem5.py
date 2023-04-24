@@ -40,4 +40,39 @@ print(p_1)
 p_1_smooth = (counts[1]+0.1)/(counts[0]+0.1*813)
 print(p_1_smooth)
 
+### 2
+counts = trigram("in", "the", "time", sentences)
+p_1 = counts[1]/counts[0]
+print(p_1)
+p_1_smooth = (counts[1]+0.1)/(counts[0]+0.1*813)
+print(p_1_smooth)
+
+### 3
+counts = trigram("the", "jury", "said", sentences)
+p_1 = counts[1]/counts[0]
+print(p_1)
+p_1_smooth = (counts[1]+0.1)/(counts[0]+0.1*813)
+print(p_1_smooth)
+
+### 4
+counts = trigram("the", "jury", "recommended", sentences)
+p_1 = counts[1]/counts[0]
+print(p_1)
+p_1_smooth = (counts[1]+0.1)/(counts[0]+0.1*813)
+print(p_1_smooth)
+
+### 5
+counts = trigram("the", "jury", "that", sentences)
+p_1 = counts[1]/counts[0]
+print(p_1)
+p_1_smooth = (counts[1]+0.1)/(counts[0]+0.1*813)
+print(p_1_smooth)
+
+### 6
+counts = trigram("agriculture", "teacher", ",", sentences)
+p_1 = counts[1]/counts[0]
+print(p_1)
+p_1_smooth = (counts[1]+0.1)/(counts[0]+0.1*813)
+print(p_1_smooth)
+
 
