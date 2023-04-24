@@ -62,3 +62,39 @@ print(probs[word_index_dict['the'], word_index_dict['jury']])
 print(probs[word_index_dict['the'], word_index_dict['campaign']])
 print(probs[word_index_dict['anonymous'], word_index_dict['calls']])
 f.close()
+
+# problem 6
+toy_sentences = []
+f = open("toy_corpus.txt")
+
+for line in f:
+    lower = []
+
+    line = line.rstrip("\n")
+    line = line.split(" ")
+    for word in line:
+        lower.append(word.lower())
+    toy_sentences.append(lower[:-1])
+
+
+sentprob = [1,1]
+
+for count, sentence in enumerate(toy_sentences):
+    previous_word = '<s>'
+    for word in sentence[1:]: 
+        #columns are ordering the previous words and rows are ordering the words 
+        #look at  this maybe  it need to be otherway arround 
+        sentprob[count] *= probs[word_index_dict[previous_word], word_index_dict[word]]
+        previous_word = word
+
+print(sentprob)
+
+sent_len = [len(toy_sentences[0]) - 1,len(toy_sentences[1]) - 1]
+
+perplexity1 = 1/(pow(sentprob[0], 1.0/sent_len[0]))
+perplexity2 = 1/(pow(sentprob[1], 1.0/sent_len[1]))
+
+print(perplexity1, perplexity2)
+
+with open('smoothed_eval.txt', 'w') as f:
+    f.write("%s\n%s\n"%(str(perplexity1), str(perplexity2)))

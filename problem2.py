@@ -17,7 +17,7 @@ vocab = open("brown_vocab_100.txt")
 #load the indices dictionary
 word_index_dict = {}
 for i, line in enumerate(vocab):
-    #TODO: import part 1 code to build dictionary
+    #import part 1 code to build dictionary
     line = line.rstrip('\n')
     word_index_dict[line] = i
 
@@ -35,26 +35,57 @@ for line in f:
 
 
 
-# print(sentences)
-
-#TODO: initialize counts to a zero vector
+#initialize counts to a zero vector
 counts = np.zeros(813)
 
-#TODO: iterate through file and update counts
+#iterate through file and update counts
 for sentence in sentences:
     for word in sentence:
         counts[word_index_dict[word]] += 1
 
 
-print(counts)
+# print(counts)
 
 
 
-#TODO: normalize and writeout counts. 
+#normalize and writeout counts. 
 probs = counts / np.sum(counts)
 
-with open('unigram_probs.txt.txt', 'w') as f:
+with open('unigram_probs.txt', 'w') as f:
     for prob in probs:
         f.write("%s\n"%(str(prob)))
 
+# problem6
+toy_sentences = []
+f = open("toy_corpus.txt")
+
+for line in f:
+    lower = []
+
+    line = line.rstrip("\n")
+    line = line.split(" ")
+    for word in line:
+        lower.append(word.lower())
+    toy_sentences.append(lower[:-1])
+
+# initialize sentence probablilties
+sentprob = [1,1]
+
+# calculate sentence probablitirs
+for count, sentence in enumerate(toy_sentences):
+    for word in sentence:
+       sentprob[count] *= probs[word_index_dict[word]]
+
+print(sentprob)
+
+# calculate perplexities
+sent_len = [len(toy_sentences[0]),len(toy_sentences[1])]
+
+perplexity1 = 1/(pow(sentprob[0], 1.0/sent_len[0]))
+perplexity2 = 1/(pow(sentprob[1], 1.0/sent_len[1]))
+
+print(perplexity1, perplexity2)
+
+with open('unigram_eval.txt', 'w') as f:
+    f.write("%s\n%s\n"%(str(perplexity1), str(perplexity2)))
 
