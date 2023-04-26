@@ -24,7 +24,7 @@ with open('word_to_index_100.txt', 'w') as f:
     for word in word_index_dict:
         f.write("%s,%s\n"%(word,str(word_index_dict[word])))
 
-
+# check output
 print(word_index_dict['all'])
 print(word_index_dict['resolution'])
 print(len(word_index_dict))

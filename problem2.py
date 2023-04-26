@@ -33,8 +33,6 @@ for line in f:
         lower.append(word.lower())
     sentences.append(lower[:-1])
 
-
-
 #initialize counts to a zero vector
 counts = np.zeros(813)
 
@@ -43,11 +41,6 @@ for sentence in sentences:
     for word in sentence:
         counts[word_index_dict[word]] += 1
 
-
-# print(counts)
-
-
-
 #normalize and writeout counts. 
 probs = counts / np.sum(counts)
 
@@ -55,7 +48,10 @@ with open('unigram_probs.txt', 'w') as f:
     for prob in probs:
         f.write("%s\n"%(str(prob)))
 
-# problem6
+
+# problem 6 - calculating perplexities
+
+# load toy corpus
 toy_sentences = []
 f = open("toy_corpus.txt")
 
@@ -68,15 +64,12 @@ for line in f:
         lower.append(word.lower())
     toy_sentences.append(lower[:-1])
 
-# initialize sentence probablilties
+# calculate sentence probablities
 sentprob = [1,1]
 
-# calculate sentence probablitirs
 for count, sentence in enumerate(toy_sentences):
     for word in sentence:
        sentprob[count] *= probs[word_index_dict[word]]
-
-print(sentprob)
 
 # calculate perplexities
 sent_len = [len(toy_sentences[0]),len(toy_sentences[1])]
@@ -84,8 +77,7 @@ sent_len = [len(toy_sentences[0]),len(toy_sentences[1])]
 perplexity1 = 1/(pow(sentprob[0], 1.0/sent_len[0]))
 perplexity2 = 1/(pow(sentprob[1], 1.0/sent_len[1]))
 
-print(perplexity1, perplexity2)
-
+# write to txt file
 with open('unigram_eval.txt', 'w') as f:
     f.write("%s\n%s\n"%(str(perplexity1), str(perplexity2)))
 
