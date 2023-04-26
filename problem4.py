@@ -13,7 +13,6 @@ from sklearn.preprocessing import normalize
 from generate import GENERATE
 import random
 vocab = open("brown_vocab_100.txt")
-#vocab = codecs.open("brown_vocab_100.txt"), dit werkte niet. Zag die andere bij eva dus heb dat gedaan??? 
 
 #load the indices dictionary
 word_index_dict = {}
@@ -24,7 +23,6 @@ for i, line in enumerate(vocab):
 
 sentences = []
 f = open("brown_100.txt")
-#f = codecs.open("brown_100.txt"), same as above with the vocab
 
 for line in f:
     lower = []
@@ -37,30 +35,29 @@ for line in f:
 
 #print(sentences)
 
-counts = np.zeros((813,813)) #TODO: initialize numpy 0s array
+counts = np.zeros((813,813)) # initialize numpy 0s array
 print(counts)
 
-#TODO: iterate through file and update counts
+# iterate through file and update counts
 for sentence in sentences:
     previous_word = '<s>'
     for word in sentence[1:]: 
         #columns are ordering the previous words and rows are ordering the words 
-        #look at  this maybe  it need to be otherway arround 
-        print
+        #look at  this maybe  it need to be otherway arround
         counts[word_index_dict[previous_word], word_index_dict[word]] += 1
         previous_word = word
 
-#TODO: add smoothing to counts 
+# add smoothing to counts
 counts += 0.1
 
-#TODO: normalize counts
+# normalize counts
 probs = normalize(counts, norm='l1', axis=1)
 
-#TODO: writeout bigram probabilities
-print(probs[word_index_dict['all'], word_index_dict['the']])
-print(probs[word_index_dict['the'], word_index_dict['jury']])
-print(probs[word_index_dict['the'], word_index_dict['campaign']])
-print(probs[word_index_dict['anonymous'], word_index_dict['calls']])
+# writeout bigram probabilities
+print("p(the | all) = " + str(probs[word_index_dict['all'], word_index_dict['the']]))
+print("p(jury | the) = " +str(probs[word_index_dict['the'], word_index_dict['jury']]))
+print("p(campaign | the) = " + str(probs[word_index_dict['the'], word_index_dict['campaign']]))
+print("p(calls | anonymous) = " + str(probs[word_index_dict['anonymous'], word_index_dict['calls']]))
 f.close()
 
 # problem 6
